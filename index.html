@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Light-World — Gerenciador de Fichas</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --gold:#c9a84c;--gold-light:#e8cb7a;--gold-dim:#7a6030;
@@ -282,57 +281,10 @@ body{background:var(--bg-deep);color:var(--text);font-family:'Crimson Pro',Georg
 /* ─── RESPONSIVE ─── */
 @media(max-width:700px){.attr-grid{grid-template-columns:repeat(4,1fr)}.vital-grid{grid-template-columns:repeat(2,1fr)}.info-strip{grid-template-columns:1fr 1fr}.pericia-list{grid-template-columns:1fr}.cards-grid{grid-template-columns:1fr 1fr}.rank-points-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.attr-grid{grid-template-columns:repeat(3,1fr)}.grid-2,.grid-3{grid-template-columns:1fr}.info-strip{grid-template-columns:1fr 1fr}.cards-grid{grid-template-columns:1fr}.rank-points-grid{grid-template-columns:1fr}}
-
-/* ─── LOGIN SCREEN ─── */
-#view-login{display:none;min-height:100vh;align-items:center;justify-content:center;flex-direction:column;gap:0}
-.login-box{background:var(--bg-card);border:1px solid var(--border-gold);border-top:3px solid var(--gold);border-radius:4px;padding:36px 32px;max-width:380px;width:90%;text-align:center}
-.login-title{font-family:"Cinzel Decorative",serif;font-size:20px;color:var(--gold);letter-spacing:4px;text-shadow:0 0 24px rgba(201,168,76,.4);margin-bottom:4px}
-.login-sub{font-family:"Cinzel",serif;font-size:9px;color:var(--text-dim);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px}
-.login-field{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;text-align:left}
-.login-field label{font-family:"Cinzel",serif;font-size:9px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase}
-.login-field input{background:var(--bg-mid);border:1px solid var(--border);border-bottom:2px solid var(--gold-dim);color:var(--text-bright);font-family:"Crimson Pro",serif;font-size:15px;padding:7px 10px;outline:none;border-radius:1px;transition:border-color .2s;width:100%}
-.login-field input:focus{border-color:var(--gold)}
-.login-btn{width:100%;margin-top:8px;font-family:"Cinzel",serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px;border:1px solid var(--gold-dim);background:rgba(201,168,76,.08);color:var(--gold);cursor:pointer;border-radius:1px;transition:all .2s}
-.login-btn:hover{background:rgba(201,168,76,.18);border-color:var(--gold)}
-.login-err{font-family:"Cinzel",serif;font-size:9px;color:var(--red);letter-spacing:1px;min-height:14px;margin-top:4px}
-.login-toggle{font-family:"Cinzel",serif;font-size:9px;color:var(--text-dim);margin-top:16px;cursor:pointer;letter-spacing:1px}
-.login-toggle span{color:var(--gold);text-decoration:underline}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--text-dim);display:inline-block;margin-right:5px;transition:background .3s}
-.sync-dot.ok{background:#508050}
-.sync-dot.saving{background:var(--gold);animation:pulse .8s infinite}
-.sync-dot.err{background:var(--red)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.sala-bar{background:rgba(201,168,76,.04);border:1px solid var(--border-gold);border-radius:2px;padding:8px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.sala-bar-label{font-family:"Cinzel",serif;font-size:9px;letter-spacing:2px;color:var(--gold-dim);text-transform:uppercase}
-.sala-bar-code{font-family:"Cinzel Decorative",serif;font-size:14px;color:var(--gold);letter-spacing:3px}
-.sala-bar-actions{margin-left:auto;display:flex;gap:7px}
-.logout-btn{font-family:"Cinzel",serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border:1px solid var(--border);background:transparent;color:var(--text-dim);cursor:pointer;border-radius:1px;transition:all .2s}
-.logout-btn:hover{border-color:var(--red-dim);color:var(--red)}
 </style>
 </head>
 <body>
 
-<!-- ════ LOGIN ════ -->
-<div id="view-login" style="display:flex">
-  <div class="login-box">
-    <div class="login-title">LIGHT · WORLD</div>
-    <div class="login-sub" id="loginSubtitle">Acesse sua conta</div>
-    <div class="login-field">
-      <label>E-mail</label>
-      <input type="email" id="loginEmail" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')fazerLogin()">
-    </div>
-    <div class="login-field">
-      <label>Senha</label>
-      <input type="password" id="loginSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
-    </div>
-    <div class="login-err" id="loginErr"></div>
-    <button class="login-btn" onclick="fazerLogin()" id="loginBtn">✦ Entrar ✦</button>
-    <div class="login-toggle" onclick="toggleLoginMode()">Não tem conta? <span id="loginToggleText">Criar conta</span></div>
-  </div>
-</div>
-
-
-<div id="g-header-wrap" style="display:none">
 <!-- ════ HEADER ════ -->
 <div class="g-header">
   <div class="g-header-title">LIGHT · WORLD</div>
@@ -354,14 +306,6 @@ body{background:var(--bg-deep);color:var(--text);font-family:'Crimson Pro',Georg
       </div>
     </div>
 
-    <div class="sala-bar">
-      <span class="sala-bar-label">Sala:</span>
-      <span class="sala-bar-code" id="salaCode">—</span>
-      <span><span class="sync-dot" id="syncDot"></span><span style="font-family:Cinzel,serif;font-size:8px;color:var(--text-dim);letter-spacing:1px" id="syncLabel">offline</span></span>
-      <div class="sala-bar-actions">
-        <button class="logout-btn" onclick="fazerLogout()">Sair</button>
-      </div>
-    </div>
     <div class="gallery-toolbar">
       <div class="gallery-count">Personagens: <span id="charCount">0</span></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -795,67 +739,10 @@ body{background:var(--bg-deep);color:var(--text);font-family:'Crimson Pro',Georg
 </div>
 
 <div id="toast"></div>
-</div><!-- /g-header-wrap -->
 
 <script>
 // ════════════════════════════════════════════
-// SUPABASE CONFIG
-// ════════════════════════════════════════════
-const SUPABASE_URL = 'https://yvpxqhevkgtyekohwbpg.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2cHhxaGV2a2d0eWVrb2h3YnBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg1MzM4MjAsImV4cCI6MjA5NDEwOTgyMH0.59JDnbHT5Y1swIVc2UJxSMWYWZYTy3oQYmxhSeuo8vQ';
-const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-let currentUser = null;
-let realtimeChannel = null;
-
-// ════════════════════════════════════════════
-// AUTH FUNCTIONS
-// ════════════════════════════════════════════
-let loginMode = 'login'; // 'login' | 'signup'
-
-function toggleLoginMode() {
-  loginMode = loginMode === 'login' ? 'signup' : 'login';
-  document.getElementById('loginSubtitle').textContent = loginMode === 'login' ? 'Acesse sua conta' : 'Criar nova conta';
-  document.getElementById('loginToggleText').textContent = loginMode === 'login' ? 'Criar conta' : 'Já tenho conta';
-  document.getElementById('loginBtn').textContent = loginMode === 'login' ? '✦ Entrar ✦' : '✦ Criar Conta ✦';
-  document.getElementById('loginErr').textContent = '';
-}
-
-async function fazerLogin() {
-  const email = document.getElementById('loginEmail').value.trim();
-  const senha = document.getElementById('loginSenha').value;
-  const errEl = document.getElementById('loginErr');
-  errEl.textContent = '';
-  if (!email || !senha) { errEl.textContent = 'Preencha e-mail e senha.'; return; }
-  document.getElementById('loginBtn').textContent = '...';
-  try {
-    let result;
-    if (loginMode === 'signup') {
-      result = await db.auth.signUp({ email, password: senha });
-    } else {
-      result = await db.auth.signInWithPassword({ email, password: senha });
-    }
-    if (result.error) { errEl.textContent = traduzirErroAuth(result.error.message); }
-    else if (loginMode === 'signup' && !result.data.session) {
-      errEl.textContent = 'Conta criada! Verifique seu e-mail para confirmar.';
-    }
-  } catch(e) { errEl.textContent = 'Erro de conexão.'; }
-  document.getElementById('loginBtn').textContent = loginMode === 'login' ? '✦ Entrar ✦' : '✦ Criar Conta ✦';
-}
-
-function traduzirErroAuth(msg) {
-  if (msg.includes('Invalid login')) return 'E-mail ou senha incorretos.';
-  if (msg.includes('already registered')) return 'Este e-mail já está cadastrado.';
-  if (msg.includes('Password should be')) return 'Senha muito curta (mínimo 6 caracteres).';
-  return msg;
-}
-
-async function fazerLogout() {
-  await db.auth.signOut();
-}
-
-// ════════════════════════════════════════════
-// STORAGE (agora via Supabase)
+// STORAGE
 // ════════════════════════════════════════════
 const STORAGE_KEY = 'lw_fichas_v5';
 const PROFILE_KEY = 'lw_profile_v2';
@@ -880,124 +767,72 @@ let perfil = {
 // VD state
 let vdList = []; // [{tipo:'vantagem'|'desvantagem', nome:'', desc:''}]
 
-async function loadStorage() {
-  if (!currentUser) return;
-  setSyncStatus('saving');
+function loadStorage() {
   try {
-    const { data, error } = await db.from('fichas').select('*').eq('user_id', currentUser.id);
-    if (error) throw error;
-    fichas = {};
-    (data || []).forEach(row => { fichas[row.ficha_id] = row.dados; });
-    setSyncStatus('ok');
-  } catch(e) { setSyncStatus('err'); }
+    const r = localStorage.getItem(STORAGE_KEY);
+    if (r) fichas = JSON.parse(r);
+  } catch(e) { fichas = {}; }
 
   try {
-    const { data } = await db.from('perfis').select('dados').eq('user_id', currentUser.id).single();
-    if (data) Object.assign(perfil, data.dados);
+    const p = localStorage.getItem(PROFILE_KEY);
+    if (p) Object.assign(perfil, JSON.parse(p));
   } catch(e) {}
 }
 
-async function saveStorage() {
-  if (!currentUser) return;
-  setSyncStatus('saving');
+function saveStorage() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(fichas)); }
+  catch(e) { showToast('Erro ao salvar!'); }
+}
+
+function saveProfile() {
+  try { localStorage.setItem(PROFILE_KEY, JSON.stringify(perfil)); }
+  catch(e) {}
+}
+
+// ─── Galeria Pública (simula "servidor" no localStorage compartilhado) ───────
+// Na prática cada aba/usuário grava no mesmo SHARED_KEY do mesmo navegador.
+// Para uso multi-usuário real, substituir por fetch() para um backend.
+function loadShared() {
   try {
-    // Upsert cada ficha individualmente
-    for (const [ficha_id, dados] of Object.entries(fichas)) {
-      await db.from('fichas').upsert({
-        user_id: currentUser.id,
-        ficha_id,
-        dados,
-        nome_personagem: dados.nomePersonagem || '',
-        nome_jogador: dados.nomeJogador || '',
-        publico: perfil.publico || false,
-        updated_at: new Date().toISOString()
-      }, { onConflict: 'user_id,ficha_id' });
-    }
-    setSyncStatus('ok');
-  } catch(e) { setSyncStatus('err'); showToast('Erro ao salvar!'); }
+    const s = localStorage.getItem(SHARED_KEY);
+    return s ? JSON.parse(s) : {};
+  } catch(e) { return {}; }
+}
+function saveShared(data) {
+  try { localStorage.setItem(SHARED_KEY, JSON.stringify(data)); }
+  catch(e) {}
 }
 
-async function saveProfile() {
-  if (!currentUser) return;
-  try {
-    await db.from('perfis').upsert({
-      user_id: currentUser.id,
-      dados: perfil,
-      nome: perfil.nome || '',
-      avatar: perfil.avatar || '⚔',
-      publico: perfil.publico || false
-    }, { onConflict: 'user_id' });
-    // Atualizar flag publico em todas as fichas do usuario
-    await db.from('fichas')
-      .update({ publico: perfil.publico || false })
-      .eq('user_id', currentUser.id);
-  } catch(e) { console.error('saveProfile error:', e); }
-}
-
-function setSyncStatus(state) {
-  const dot = document.getElementById('syncDot');
-  const label = document.getElementById('syncLabel');
-  if (!dot || !label) return;
-  dot.className = 'sync-dot ' + state;
-  if (state === 'ok') label.textContent = 'sincronizado';
-  else if (state === 'saving') label.textContent = 'salvando...';
-  else label.textContent = 'erro de sync';
-}
-
-// ─── Galeria Pública via Supabase ───────────────────────────────────────────
-async function loadShared() {
-  try {
-    // Buscar todos os perfis publicos
-    const { data: profs, error: profErr } = await db.from('perfis').select('user_id, nome, avatar, dados').eq('publico', true);
-    if (profErr) throw profErr;
-    if (!profs || profs.length === 0) return {};
-
-    const byUser = {};
-    profs.forEach(p => {
-      byUser[p.user_id] = {
-        nome: p.nome || '—',
-        avatar: p.avatar || '⚔',
-        bio: p.dados?.bio || '',
-        fichas: {}
-      };
-    });
-
-    // Buscar fichas publicas desses usuarios
-    const userIds = Object.keys(byUser);
-    const { data: fichasData } = await db.from('fichas')
-      .select('user_id, ficha_id, dados')
-      .in('user_id', userIds);
-
-    (fichasData || []).forEach(row => {
-      if (byUser[row.user_id]) {
-        byUser[row.user_id].fichas[row.ficha_id] = row.dados;
-      }
-    });
-
-    return byUser;
-  } catch(e) { console.error('loadShared error:', e); return {}; }
-}
-
-async function saveShared(data) {
-  // No novo sistema, saveStorage já faz o upload com publico=true/false
-  // Esta função é mantida por compatibilidade mas não precisa fazer nada
-}
-
-// ─── Realtime: atualizar galeria pública ao vivo ─────────────────────────────
-function iniciarRealtime() {
-  if (realtimeChannel) db.removeChannel(realtimeChannel);
-  realtimeChannel = db.channel('fichas-publicas')
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'fichas', filter: 'publico=eq.true' }, () => {
-      // Recarregar galeria pública se estiver aberta
-      if (document.getElementById('view-public').style.display !== 'none') renderPublicGallery();
-    })
-    .subscribe();
-}
-
-async function publicarFichasDoJogador() {
-  // No novo sistema, salvar com publico=true já publica automaticamente
-  await saveStorage();
-  await saveProfile();
+function publicarFichasDoJogador() {
+  if (!perfil.publico || !perfil.nome) return;
+  const shared = loadShared();
+  const playerKey = 'player_' + encodeURIComponent(perfil.nome.toLowerCase().replace(/\s+/g,'_'));
+  const publicFichas = {};
+  Object.keys(fichas).forEach(id => {
+    const d = fichas[id];
+    // Exporta uma versão de leitura (sem dados sensíveis extras)
+    publicFichas[id] = {
+      nomePersonagem: d.nomePersonagem || '—',
+      nomeJogador: d.nomeJogador || perfil.nome,
+      raca: d.raca || '',
+      classe: d.classe || '',
+      ancestralidade: d.ancestralidade || '',
+      divindade: d.divindade || '',
+      caminho: d.caminho || '',
+      rankSelect: d.rankSelect || 'M-',
+      vidaAtual: d.vidaAtual || 0, vidaMax: d.vidaMax || 0,
+      calmaAtual: d.calmaAtual !== undefined ? d.calmaAtual : 15, calmaMax: d.calmaMax || 15,
+      _fullData: d, // dados completos para visualização
+    };
+  });
+  shared[playerKey] = {
+    nome: perfil.nome,
+    avatar: perfil.avatar || '⚔',
+    bio: perfil.bio || '',
+    fichas: publicFichas,
+    _upd: Date.now(),
+  };
+  saveShared(shared);
 }
 
 // ════════════════════════════════════════════
@@ -1148,12 +983,12 @@ function abrirPerfil() {
   showProfileView();
 }
 
-async function salvarPerfil() {
+function salvarPerfil() {
   perfil.nome = document.getElementById('pfNome').value.trim();
   perfil.avatar = document.getElementById('pfAvatar').value.trim() || '⚔';
   perfil.bio = document.getElementById('pfBio').value.trim();
   perfil.publico = document.getElementById('pfPublico').checked;
-  await saveProfile();
+  saveProfile();
   if (perfil.publico && perfil.nome) publicarFichasDoJogador();
   showToast('✦ Perfil salvo!');
   showGallery();
@@ -1232,17 +1067,16 @@ function abrirGaleriaPublica() {
   renderPublicGallery();
 }
 
-async function renderPublicGallery() {
+function renderPublicGallery() {
+  const shared = loadShared();
+  const players = Object.values(shared);
   const grid = document.getElementById('pubGrid');
   const cnt = document.getElementById('pubPlayerCount');
-  grid.innerHTML = '<div style="font-family:'Cinzel',serif;font-size:10px;color:var(--text-dim);text-align:center;padding:20px;grid-column:1/-1">Carregando...</div>';
-  const shared = await loadShared();
-  const players = Object.values(shared);
   grid.innerHTML = '';
   cnt.textContent = players.length;
 
   if (players.length === 0) {
-    grid.innerHTML = '<div style="font-family:'Cinzel',serif;font-size:10px;color:var(--text-dim);text-align:center;padding:20px;grid-column:1/-1">Nenhum jogador tornou suas fichas públicas ainda. Configure em "Meu Perfil".</div>';
+    grid.innerHTML = '<div style="font-family:\'Cinzel\',serif;font-size:10px;color:var(--text-dim);text-align:center;padding:20px;grid-column:1/-1">Nenhum jogador tornou suas fichas públicas ainda. Configure em "Meu Perfil".</div>';
     return;
   }
 
@@ -1514,20 +1348,21 @@ function populateEditor(d) {
   updateRankPointsUI();
 }
 
-async function salvarFicha() {
+function salvarFicha() {
   if (!currentId) return;
   fichas[currentId] = gatherData();
-  await saveStorage();
+  saveStorage();
   if (perfil.publico && perfil.nome) publicarFichasDoJogador();
   setAutosaveStatus('salvo ✦');
   showToast('✦ Ficha salva! ✦');
   updateShareUrl();
 }
 
-async function salvarFichaQuiet() {
+function salvarFichaQuiet() {
   if (!currentId) return;
   fichas[currentId] = gatherData();
-  await saveStorage();
+  saveStorage();
+  if (perfil.publico && perfil.nome) publicarFichasDoJogador();
   setAutosaveStatus('salvo ✦');
 }
 
@@ -1766,4 +1601,189 @@ function adicionarPericia() {
   nameInput.value = '';
   buildPericias();
   renderPericias();
-  scheduleAu
+  scheduleAutoSave();
+  showToast('✦ Perícia adicionada!');
+}
+
+function getAllPericiaNames() {
+  const names = [];
+  periciasBase.forEach(g => g.itens.forEach(n => names.push(n)));
+  periciasCustom.forEach(c => names.push(c.nome));
+  return names;
+}
+
+function removerPericia(key) {
+  const idx = periciasCustom.findIndex(c => getKey(c.nome) === key);
+  if (idx === -1) { showToast('Não é possível remover perícias base!'); return; }
+  periciasCustom.splice(idx, 1);
+  delete periciaState[key];
+  buildPericias();
+  renderPericias();
+  scheduleAutoSave();
+  showToast('Perícia removida.');
+}
+
+function getPericiaPointsSpent() {
+  return Object.values(periciaState).reduce((s, v) => s + (parseInt(v) || 0), 0);
+}
+
+function buildPericias() {
+  const container = document.getElementById('periciasContainer');
+  container.innerHTML = '';
+  const customByGrupo = {};
+  periciasCustom.forEach(c => {
+    if (!customByGrupo[c.grupo]) customByGrupo[c.grupo] = [];
+    customByGrupo[c.grupo].push(c.nome);
+  });
+  const allGrupos = [...periciasBase.map(g => g.grupo)];
+  Object.keys(customByGrupo).forEach(g => { if (!allGrupos.includes(g)) allGrupos.push(g); });
+
+  allGrupos.forEach(grupoName => {
+    const base = periciasBase.find(g => g.grupo === grupoName);
+    const customItens = customByGrupo[grupoName] || [];
+    const allItens = [...(base ? base.itens : []), ...customItens];
+    if (allItens.length === 0) return;
+    const emoji = GRUPO_EMOJIS[grupoName] || '✦';
+    const gDiv = document.createElement('div');
+    gDiv.className = 'pericia-group';
+    gDiv.innerHTML = `<div class="pericia-group-title">${emoji} ${grupoName}</div>`;
+    const list = document.createElement('div');
+    list.className = 'pericia-list';
+
+    allItens.forEach(nome => {
+      const key = getKey(nome);
+      if (periciaState[key] === undefined) periciaState[key] = 0;
+      const isCustom = periciasCustom.some(c => getKey(c.nome) === key);
+      const item = document.createElement('div');
+      item.className = 'pericia-item';
+      item.dataset.key = key;
+
+      // Pontos: input livre ao invés de botão toggle
+      item.innerHTML = `
+        <div class="pericia-check"></div>
+        <span class="pericia-name">${nome}${isCustom ? ' <span style="font-size:9px;color:var(--gold-dim)">✦</span>' : ''}</span>
+        <span class="pericia-cost" id="pc_${key}"></span>
+        <input type="number" class="pericia-pts-input" id="pb_${key}" value="${periciaState[key] || 0}" min="0"
+          onclick="event.stopPropagation()"
+          oninput="setPericiaPoints('${key}', this.value)">
+        <button class="pericia-del" title="Remover" onclick="event.stopPropagation();removerPericia('${key}')">${isCustom ? '✕' : ''}</button>`;
+
+      // Clique ainda faz treinar/dominar para compatibilidade
+      item.addEventListener('click', () => { /* handled by input */ });
+      list.appendChild(item);
+    });
+
+    gDiv.appendChild(list);
+    container.appendChild(gDiv);
+  });
+}
+
+function setPericiaPoints(key, val) {
+  const n = Math.max(0, parseInt(val) || 0);
+  periciaState[key] = n;
+  renderPericias();
+  updateRankPointsUI();
+  scheduleAutoSave();
+}
+
+function countTrained() { return Object.values(periciaState).filter(v => v > 0).length; }
+
+function renderPericias() {
+  document.querySelectorAll('.pericia-item').forEach(item => {
+    const key = item.dataset.key;
+    const s = parseInt(periciaState[key]) || 0;
+    item.className = 'pericia-item' + (s > 0 ? (s >= 2 ? ' mastered' : ' trained') : '');
+    const inp = document.getElementById('pb_' + key);
+    if (inp && parseInt(inp.value) !== s) inp.value = s;
+    const c = document.getElementById('pc_' + key);
+    if (c) { c.textContent = s > 0 ? `(${s}pt)` : ''; c.style.color = s >= 2 ? 'var(--gold)' : 'var(--gold-dim)'; }
+  });
+  const cnt = document.getElementById('periciaCount');
+  if (cnt) cnt.textContent = countTrained();
+  updateRankPointsUI();
+}
+
+// ════════════════════════════════════════════
+// TRIFORME
+// ════════════════════════════════════════════
+function mkHab(tipo, badge, ph, info) {
+  const d = document.createElement('div');
+  d.className = 'hab-slot';
+  d.innerHTML = `
+    <div class="hab-header"><span class="hab-badge badge-${tipo}">${badge}</span><input type="text" class="hab-name-input" placeholder="${ph}" oninput="scheduleAutoSave()"></div>
+    <textarea class="hab-desc" placeholder="${info}" oninput="scheduleAutoSave()"></textarea>
+    <div class="hab-stats">
+      <div class="hab-stat">Custo: <input type="text" placeholder="ex: 4 Poder" oninput="scheduleAutoSave()"></div>
+      <div class="hab-stat">Dano: <input type="text" placeholder="ex: 1d4" oninput="scheduleAutoSave()"></div>
+      <div class="hab-stat">Turnos: <input type="text" placeholder="ex: 4" oninput="scheduleAutoSave()"></div>
+    </div>`;
+  return d;
+}
+
+function buildTriforme() {
+  const c = document.getElementById('habComuns');
+  const m = document.getElementById('habMedianas');
+  const s = document.getElementById('habSupremas');
+  c.innerHTML = ''; m.innerHTML = ''; s.innerHTML = '';
+  for (let i = 0; i < 6; i++) c.appendChild(mkHab('comum','Comum',`Comum ${i+1}`,'4 turnos | 4 Poder | 1d4'));
+  for (let i = 0; i < 4; i++) m.appendChild(mkHab('mediana','Mediana',`Mediana ${i+1}`,'2 turnos | 8 Poder | 2d6–4d6'));
+  for (let i = 0; i < 3; i++) s.appendChild(mkHab('suprema','Suprema',`Suprema ${i+1}`,'3 turnos | 5d8–8d8'));
+}
+
+// ════════════════════════════════════════════
+// ATTR MODS
+// ════════════════════════════════════════════
+function getMod(v) {
+  if (v <= 2) return -3; if (v <= 4) return -2; if (v <= 6) return -1; if (v <= 8) return 0;
+  if (v <= 12) return 1; if (v <= 16) return 2; if (v <= 20) return 3; if (v <= 24) return 4;
+  if (v <= 28) return 5; if (v <= 32) return 6; if (v <= 36) return 7; if (v <= 40) return 8;
+  if (v <= 44) return 9; if (v <= 48) return 10; if (v <= 52) return 11; if (v <= 56) return 12;
+  if (v <= 60) return 13; if (v <= 64) return 14; return 15;
+}
+function updateMod(iid, mid) {
+  const v = parseInt(document.getElementById(iid)?.value) || 0;
+  const m = getMod(v);
+  const el = document.getElementById(mid);
+  if (!el) return;
+  el.textContent = (m >= 0 ? '+' : '') + m;
+  el.className = 'attr-mod' + (m < 0 ? ' neg' : '');
+}
+function updatePontos() { updateRankPointsUI(); scheduleAutoSave(); }
+function updateCalma() {
+  const cur = parseInt(document.getElementById('calmaAtual')?.value) || 0;
+  const max = parseInt(document.getElementById('calmaMax')?.value) || 15;
+  const pct = Math.max(0, Math.min(100, (cur / max) * 100));
+  const bar = document.getElementById('calmaBar'); if (bar) bar.style.width = pct + '%';
+  const el = document.getElementById('calmaEstado'); if (!el) return;
+  if (cur >= 10) { el.textContent = 'Calma Padrão'; el.style.color = 'var(--gold)'; }
+  else if (cur >= 0) { el.textContent = 'Sanidade Baixa'; el.style.color = '#e0a040'; }
+  else if (cur > -1) { el.textContent = 'Sanidade Extrema'; el.style.color = 'var(--red)'; }
+  else { el.textContent = '⚠ Sanidade Nula'; el.style.color = '#ff4040'; }
+  scheduleAutoSave();
+}
+function updateBar(tipo) {
+  const cur = parseInt(document.getElementById(tipo+'Atual')?.value) || 0;
+  const max = parseInt(document.getElementById(tipo+'Max')?.value) || 1;
+  const pct = Math.max(0, Math.min(100, (cur / max) * 100));
+  const bar = document.getElementById(tipo+'Bar'); if (bar) bar.style.width = pct + '%';
+  scheduleAutoSave();
+}
+
+// ════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+loadStorage();
+showGallery();
+checkShareHash();
+</script>
+</body>
+  </html>
