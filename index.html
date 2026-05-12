@@ -326,8 +326,8 @@ body{background:var(--bg-deep);color:var(--text);font-family:'Crimson Pro',Georg
       <input type="password" id="loginSenha" placeholder="••••••••" onkeydown="if(event.key==='Enter')fazerLogin()">
     </div>
     <div class="login-err" id="loginErr"></div>
-    <button class="login-btn" id="loginBtn" onclick="fazerLogin()">✦ Entrar ✦</button>
-    <div class="login-toggle" id="loginToggle">Não tem conta? <span id="loginToggleText" style="color:var(--gold);text-decoration:underline;cursor:pointer">Criar conta</span></div>
+    <button class="login-btn" onclick="fazerLogin()" id="loginBtn">✦ Entrar ✦</button>
+    <div class="login-toggle" onclick="toggleLoginMode()">Não tem conta? <span id="loginToggleText">Criar conta</span></div>
   </div>
 </div>
 
@@ -827,9 +827,7 @@ async function fazerLogin() {
   const errEl = document.getElementById('loginErr');
   errEl.textContent = '';
   if (!email || !senha) { errEl.textContent = 'Preencha e-mail e senha.'; return; }
-  if (senha.length < 6) { errEl.textContent = 'Senha deve ter pelo menos 6 caracteres.'; return; }
   document.getElementById('loginBtn').textContent = '...';
-  errEl.textContent = 'Conectando...';
   try {
     let result;
     if (loginMode === 'signup') {
@@ -837,24 +835,11 @@ async function fazerLogin() {
     } else {
       result = await db.auth.signInWithPassword({ email, password: senha });
     }
-    console.log('Auth result:', JSON.stringify(result));
-    if (result.error) {
-      errEl.textContent = traduzirErroAuth(result.error.message);
-    } else if (loginMode === 'signup') {
-      if (result.data?.session) {
-        errEl.textContent = '✦ Conta criada e logado!';
-      } else if (result.data?.user) {
-        errEl.textContent = 'Conta criada! Confirme seu e-mail para entrar.';
-      } else {
-        errEl.textContent = 'Resposta inesperada do servidor.';
-      }
-    } else {
-      errEl.textContent = '✦ Entrando...';
+    if (result.error) { errEl.textContent = traduzirErroAuth(result.error.message); }
+    else if (loginMode === 'signup' && !result.data.session) {
+      errEl.textContent = 'Conta criada! Verifique seu e-mail para confirmar.';
     }
-  } catch(e) {
-    console.error('Auth error:', e);
-    errEl.textContent = 'Erro: ' + (e.message || 'desconhecido');
-  }
+  } catch(e) { errEl.textContent = 'Erro de conexão.'; }
   document.getElementById('loginBtn').textContent = loginMode === 'login' ? '✦ Entrar ✦' : '✦ Criar Conta ✦';
 }
 
@@ -1768,4 +1753,17 @@ function getKey(nome) {
 }
 
 function adicionarPericia() {
-  const nameInput = document.getElem
+  const nameInput = document.getElementById('novaPericiaName');
+  const grupoSel = document.getElementById('novaPericiaGrupo');
+  const nome = nameInput.value.trim();
+  if (!nome) { showToast('Digite o nome da perícia!'); return; }
+  const grupo = grupoSel.value;
+  const key = getKey(nome);
+  const allKeys = getAllPericiaNames().map(n => getKey(n));
+  if (allKeys.includes(key)) { showToast('Perícia já existe!'); return; }
+  periciasCustom.push({ grupo, nome });
+  if (periciaState[key] === undefined) periciaState[key] = 0;
+  nameInput.value = '';
+  buildPericias();
+  renderPericias();
+  scheduleAu
